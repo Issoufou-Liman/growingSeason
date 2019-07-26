@@ -1,0 +1,33 @@
+Package: growingSeason
+Type: Package
+Title: Estimating growing season metrics from seasonal data
+Version: 0.1.0
+Authors@R: c(
+    person("Issoufou", "Liman", , c("issoufoul@gmail.com", "L.issoufou@cgiar.org"), c("aut", "cre")),
+    person("Cory", "Whitney", , role = "aut"),
+    person("James", "Kungu", , role = "aut"),
+    person("Eike", "Luedeling", , role = "aut")
+    )
+    person("Issoufou", "Liman", , email = c("issoufoul@gmail.com", "L.issoufou@cgiar.org"),
+    role = c("aut", "cre"))
+Depends:
+    R (>= 3.4.0),
+Imports:
+    raster,
+    chillR,
+    plyr
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+Description: growingSeason provides functions for estimating growing season metrics, 
+    such as the beginning, the end, or the length of the growing season from times
+    series data. Most functions were written to work on vector data, so that are 
+    scalable higher order data such as matrix, dataframe, or raster.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
+biocViews:
