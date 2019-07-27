@@ -29,7 +29,7 @@
 #' names(dx1) <- nam[1:length(dx1)]
 #'
 #' ## plotting the data
-#' default_par <- par()
+#' default_par <- par(no.readonly=TRUE)
 #' layout(rbind(c(1, 1), c(2, 3)))
 #' par(mar = c(2, 2, 1, 1))
 #' plot(dx1, type = 'o', main = 'raw data') # note 2 phases = 2 years and the starting point.
@@ -50,7 +50,7 @@
 #' ## 2 years of uni-modal pixel with many Nas towards the end.
 #' dx2 <- dx1
 #' dx2[21:length(dx2)] <- NA
-#' default_par <- par()
+#' default_par <- par(no.readonly=TRUE)
 #' layout(rbind(c(1, 1), c(2, 3)))
 #' par(mar = c(2, 2, 1, 1))
 #' plot(dx2, type = 'o')
