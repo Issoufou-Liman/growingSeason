@@ -21,23 +21,23 @@
 #' names(dy1) <- nam[1:length(dy1)]
 #'
 #' y <- get_phases (dy1, ts_freq = 12)
-#' z <- lapply(y, date_season)
+#' z <- lapply(y, date_seasons)
 #' @export
-#' @rdname date_season
-date_season <- function(x, ...) {
-    UseMethod("date_season")
+#' @rdname date_seasons
+date_seasons <- function(x, ...) {
+    UseMethod("date_seasons")
 }
 
-#' @rdname date_season
+#' @rdname date_seasons
 #' @export
-date_season.default <- function(x, ...) {
+date_seasons.default <- function(x, ...) {
   y <- seasons(x, ...)
   y <- y$season_dates
   y <- as.Date(y)
 }
 
-#' @rdname date_season
+#' @rdname date_seasons
 #' @export
-date_season.seasons <- function(x, ...) {
+date_seasons.seasons <- function(x, ...) {
   y <- x$season_dates
 }

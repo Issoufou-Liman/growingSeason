@@ -1,7 +1,7 @@
 #' Test whether a phases has a peak.
 #'
 #' Takes a vector and returns a list containing the indices of one or more peaks and
-#' TRUE as test if it found a peak. if no peak is found, then has_peak () will returned
+#' TRUE as test if it found a peak. if no peak is found, then has_peaks () will returned
 #' null as peak  and set the test to FALSE. Applied to phases slot of the phases object (see ?phases)
 #' this function can help to determine whether a phase qualifies for a season or not.
 #' Note that a season is a phases having a peak.
@@ -11,7 +11,7 @@
 #' @param steps An interger specifying the number of points for a given
 #' points to qualify for a peak.
 #' @return a list containing of the indices of the peaks and logical test.
-#' @details `has_peak ()` extends `get_falls ()` in the sense that it just internally applies
+#' @details `has_peaks ()` extends `get_falls ()` in the sense that it just internally applies
 #' `get_falls ()` function to - x to locate the peaks and add the logical test.
 #' @seealso \code{\link[growingSeason]{get_falls}}
 #' @examples
@@ -22,13 +22,13 @@
 #' dy1 <- c(dy11, dy12)
 #' names(dy1) <- nam[1:length(dy1)]
 #'
-#' ## default_par <- par(no.readonly=TRUE)
+#' default_par <- par(no.readonly=TRUE)
 #' layout(rbind(c(1, 1), c(2, 3)))
-#' ## par(mar = c(2, 2, 1, 1))
+#' par(mar = c(2, 2, 1, 1))
 #' plot (dy1, type = 'o')
 #' y <- phases (dy1, ts_freq = 12)
 #' y <- y$phases
-#' lapply (y, has_peak)
+#' lapply (y, has_peaks)
 #' lapply (y, plot, type = 'o')
 #'
 #'
@@ -39,7 +39,7 @@
 #' plot (dy2, type = 'o')
 #' y <- phases (dy2, ts_freq = 12)
 #' y <- y$phases
-#' lapply (y, has_peak)
+#' lapply (y, has_peaks)
 #' lapply (y, plot, type = 'o')
 #'
 #'
@@ -50,11 +50,11 @@
 #' plot (dy3, type = 'o')
 #' y <- phases (dy3, ts_freq = 12)
 #' y <- y$phases
-#' lapply (y, has_peak)
+#' lapply (y, has_peaks)
 #' lapply (y, plot, type = 'o')
-#' ## par(default_par)
+#' par(default_par)
 #' @export
-has_peak <- function(x, npeaks = 1, steps = 2) {
+has_peaks <- function(x, npeaks = 1, steps = 2) {
     peaks <- get_falls((-x), n_v_shape = npeaks, steps = steps)
     if (is.null(peaks) || length(peaks) == 0) {
         return(list(peak = peaks, test = FALSE))

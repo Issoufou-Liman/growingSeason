@@ -49,9 +49,9 @@ dx1 <- c(dx11, dx12)
 names(dx1) <- nam[1:length(dx1)]
 
 ## plotting the data
-## default_par <- par(no.readonly=TRUE)
+default_par <- par(no.readonly=TRUE)
 layout(rbind(c(1, 1), c(2, 3)))
-## par(mar = c(2, 2, 1, 1))
+par(mar = c(2, 2, 1, 1))
 plot(dx1, type = 'o', main = 'raw data') # note 2 phases = 2 years and the starting point.
 
 ## returning the phases as seasonal data.
@@ -65,14 +65,14 @@ y2 <- phases(dx1, ts_freq = 12, returned = 'original')
 y2
 lapply (X = y2$phases, FUN = plot, type = 'o',
 main = 'phases extracted as raw')
-## par(default_par)
+par(default_par)
 
 ## 2 years of uni-modal pixel with many Nas towards the end.
 dx2 <- dx1
 dx2[21:length(dx2)] <- NA
-## default_par <- par(no.readonly=TRUE)
+default_par <- par(no.readonly=TRUE)
 layout(rbind(c(1, 1), c(2, 3)))
-## par(mar = c(2, 2, 1, 1))
+par(mar = c(2, 2, 1, 1))
 plot(dx2, type = 'o')
 ## returning the phases as seasonal data.
 y1 <- phases(dx2, ts_freq = 12)
@@ -83,7 +83,7 @@ lapply (X = y1$phases, FUN = plot, type = 'o')
 y2 <- phases(dx2, ts_freq = 12, returned = 'original')
 y2
 lapply (X = y2$phases, FUN = plot, type = 'o') # note 1 phase and the starting point
-## par(default_par)
+par(default_par)
 }
 \seealso{
 \code{\link[growingSeason]{get_falls}}, \code{\link[growingSeason]{get_phases}}.

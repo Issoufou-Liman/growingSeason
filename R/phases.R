@@ -29,9 +29,9 @@
 #' names(dx1) <- nam[1:length(dx1)]
 #'
 #' ## plotting the data
-#' ## default_par <- par(no.readonly=TRUE)
+#' default_par <- par(no.readonly=TRUE)
 #' layout(rbind(c(1, 1), c(2, 3)))
-#' ## par(mar = c(2, 2, 1, 1))
+#' par(mar = c(2, 2, 1, 1))
 #' plot(dx1, type = 'o', main = 'raw data') # note 2 phases = 2 years and the starting point.
 #'
 #' ## returning the phases as seasonal data.
@@ -45,14 +45,14 @@
 #' y2
 #' lapply (X = y2$phases, FUN = plot, type = 'o',
 #' main = 'phases extracted as raw')
-#' ## par(default_par)
+#' par(default_par)
 #'
 #' ## 2 years of uni-modal pixel with many Nas towards the end.
 #' dx2 <- dx1
 #' dx2[21:length(dx2)] <- NA
-#' ## default_par <- par(no.readonly=TRUE)
+#' default_par <- par(no.readonly=TRUE)
 #' layout(rbind(c(1, 1), c(2, 3)))
-#' ## par(mar = c(2, 2, 1, 1))
+#' par(mar = c(2, 2, 1, 1))
 #' plot(dx2, type = 'o')
 #'## returning the phases as seasonal data.
 #' y1 <- phases(dx2, ts_freq = 12)
@@ -63,7 +63,7 @@
 #' y2 <- phases(dx2, ts_freq = 12, returned = 'original')
 #' y2
 #' lapply (X = y2$phases, FUN = plot, type = 'o') # note 1 phase and the starting point
-#' ## par(default_par)
+#' par(default_par)
 #' @importFrom stats decompose ts
 #' @importFrom chillR interpolate_gaps
 #' @export
@@ -125,7 +125,7 @@ phases <- function(x, type = c("v_points", "peaks"), n_criticals = 1, steps = 2,
 #' @export
 seasons <- function(x) {
     set.seed(123)
-    test <- has_peak(x)$test
+    test <- has_peaks(x)$test
     if (test == TRUE) {
         minVi <- runif(4, min(x), min(x[x != min(x)]))
         id <- vector(mode = "numeric", length = length(x))

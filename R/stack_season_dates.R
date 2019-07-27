@@ -5,7 +5,7 @@
 #' @param ts_freq The frequence of time series to be passed to phases (see ?phases).
 #' @return A rasterStack object (see \code{\link[raster]{Raster-class}}) of biginning
 #' and end of the season for each pixel.
-#' @seealso \code{\link[growingSeason]{phases}}, \code{\link[growingSeason]{seasons}}, \code{\link[growingSeason]{date_season}}
+#' @seealso \code{\link[growingSeason]{phases}}, \code{\link[growingSeason]{seasons}}, \code{\link[growingSeason]{date_seasons}}
 #' @examples
 #' library(raster)
 #' ## making some data
@@ -52,7 +52,7 @@ stack_season_dates <- function(x, ts_freq = 23) {
     colnames(val) <- as.character(as.Date(substring(colnames(val), 2), format = "%Y.%m.%d"))
     # getting the phases and calculating the begin and end of each season.
     seas <- lapply(X = apply(X = val, MARGIN = 1, FUN = function(i) {
-        lapply(X = get_phases(phases(i, ts_freq = ts_freq)), FUN = date_season)
+        lapply(X = get_phases(phases(i, ts_freq = ts_freq)), FUN = date_seasons)
     }), FUN = unlist, recursive = F)
     seas <- lapply(X = seas, FUN = function(i) data.frame(rbind(i)))
     seas <- do.call(plyr::rbind.fill, seas)
