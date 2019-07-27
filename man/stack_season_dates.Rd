@@ -56,7 +56,7 @@ x <- stack_season_dates(s, ts_freq = 12)
 values(x)
 }
 \seealso{
-\code{\link[SpatialProbs]{phases}}, \code{\link[SpatialProbs]{seasons}}, \code{\link[SpatialProbs]{date_season}}
+\code{\link[growingSeason]{phases}}, \code{\link[growingSeason]{seasons}}, \code{\link[growingSeason]{date_season}}
 }
 \author{
 Issoufou Liman

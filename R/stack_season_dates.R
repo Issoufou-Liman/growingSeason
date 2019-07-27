@@ -5,7 +5,7 @@
 #' @param ts_freq The frequence of time series to be passed to phases (see ?phases).
 #' @return A rasterStack object (see \code{\link[raster]{Raster-class}}) of biginning
 #' and end of the season for each pixel.
-#' @seealso \code{\link[SpatialProbs]{phases}}, \code{\link[SpatialProbs]{seasons}}, \code{\link[SpatialProbs]{date_season}}
+#' @seealso \code{\link[growingSeason]{phases}}, \code{\link[growingSeason]{seasons}}, \code{\link[growingSeason]{date_season}}
 #' @examples
 #' library(raster)
 #' ## making some data
