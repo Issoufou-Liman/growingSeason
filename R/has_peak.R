@@ -13,7 +13,7 @@
 #' @return a list containing of the indices of the peaks and logical test.
 #' @details `has_peak ()` extends `get_falls ()` in the sense that it just internally applies
 #' `get_falls ()` function to - x to locate the peaks and add the logical test.
-#' @seealso \code{\link[SpatialProbs]{get_falls}}
+#' @seealso \code{\link[growingSeason]{get_falls}}
 #' @examples
 #' ## data with complete cases
 #' nam<- seq.Date(from = as.Date('2016-01-01'), to = as.Date ('2018-12-31'), by = 16)

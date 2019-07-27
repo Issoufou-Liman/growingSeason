@@ -69,7 +69,7 @@ lapply (y, plot, type = 'o')
 ## par(default_par)
 }
 \seealso{
-\code{\link[SpatialProbs]{get_falls}}
+\code{\link[growingSeason]{get_falls}}
 }
 \author{
 Issoufou Liman

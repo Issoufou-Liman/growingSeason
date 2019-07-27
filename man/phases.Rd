@@ -86,7 +86,7 @@ lapply (X = y2$phases, FUN = plot, type = 'o') # note 1 phase and the starting p
 ## par(default_par)
 }
 \seealso{
-\code{\link[SpatialProbs]{get_falls}}, \code{\link[SpatialProbs]{get_phases}}.
+\code{\link[growingSeason]{get_falls}}, \code{\link[growingSeason]{get_phases}}.
 }
 \author{
 Issoufou Liman

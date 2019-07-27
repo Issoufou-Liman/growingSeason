@@ -19,7 +19,7 @@
 #'  \item{"phases"}{ list of phases}
 #'  \item{"criticals"}{index of the points separating the phases}
 #' }
-#' @seealso \code{\link[SpatialProbs]{get_falls}}, \code{\link[SpatialProbs]{get_phases}}.
+#' @seealso \code{\link[growingSeason]{get_falls}}, \code{\link[growingSeason]{get_phases}}.
 #' @examples
 #' ## 2 years of a uni-modal pixel with complete without NAs
 #' nam<- seq.Date(from = as.Date('2016-01-01'), to = as.Date ('2018-12-31'), by = 16)

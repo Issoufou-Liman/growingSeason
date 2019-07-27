@@ -42,7 +42,7 @@ y <- get_phases (dy1, ts_freq = 12)
 z <- lapply(y, date_season)
 }
 \seealso{
-\code{\link[SpatialProbs]{phases}}, \code{\link[SpatialProbs]{get_phases}}
+\code{\link[growingSeason]{phases}}, \code{\link[growingSeason]{get_phases}}
 }
 \author{
 Issoufou Liman

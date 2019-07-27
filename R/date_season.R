@@ -12,7 +12,7 @@
 #' @details detecting the dates of the biginning and the end of the season is more likely to
 #' yield meaningful result when `x` has been derived via `get_phases (x,..., returned = 'seasonal')` which
 #' rescales the data to make more consistant ordering.
-#' @seealso \code{\link[SpatialProbs]{phases}}, \code{\link[SpatialProbs]{get_phases}}
+#' @seealso \code{\link[growingSeason]{phases}}, \code{\link[growingSeason]{get_phases}}
 #' @examples
 #' nam<- seq.Date(from = as.Date('2016-01-01'), to = as.Date ('2018-12-31'), by = 16)
 #' dy11 <- c(1.40, 1.00, 1.50, 2.00, 5.00, 3.00, 1.00, 0.76, 2.00, 1.00, 3.50, 3.00, 1.50)
