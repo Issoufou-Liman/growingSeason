@@ -19,7 +19,8 @@ Imports:
 Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 Description: growingSeason provides functions for estimating growing season metrics, 
     such as the beginning, the end, or the length of the growing season from times
     series data. Most functions were written to work on vector data, so that are 
