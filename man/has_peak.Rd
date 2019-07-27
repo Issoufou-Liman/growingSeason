@@ -36,9 +36,9 @@ dy12 <- c(1.30, 1.10, 1.40, 2.01, 5.50, 2.80, 1.01, 1, 2.03, 1.09, 3.10, 3.00, 1
 dy1 <- c(dy11, dy12)
 names(dy1) <- nam[1:length(dy1)]
 
-default_par <- par(no.readonly=TRUE)
+## default_par <- par(no.readonly=TRUE)
 layout(rbind(c(1, 1), c(2, 3)))
-par(mar = c(2, 2, 1, 1))
+## par(mar = c(2, 2, 1, 1))
 plot (dy1, type = 'o')
 y <- phases (dy1, ts_freq = 12)
 y <- y$phases
@@ -66,7 +66,7 @@ y <- phases (dy3, ts_freq = 12)
 y <- y$phases
 lapply (y, has_peak)
 lapply (y, plot, type = 'o')
-par(default_par)
+## par(default_par)
 }
 \seealso{
 \code{\link[SpatialProbs]{get_falls}}

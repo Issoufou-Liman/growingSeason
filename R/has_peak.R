@@ -22,9 +22,9 @@
 #' dy1 <- c(dy11, dy12)
 #' names(dy1) <- nam[1:length(dy1)]
 #'
-#' default_par <- par(no.readonly=TRUE)
+#' ## default_par <- par(no.readonly=TRUE)
 #' layout(rbind(c(1, 1), c(2, 3)))
-#' par(mar = c(2, 2, 1, 1))
+#' ## par(mar = c(2, 2, 1, 1))
 #' plot (dy1, type = 'o')
 #' y <- phases (dy1, ts_freq = 12)
 #' y <- y$phases
@@ -52,7 +52,7 @@
 #' y <- y$phases
 #' lapply (y, has_peak)
 #' lapply (y, plot, type = 'o')
-#' par(default_par)
+#' ## par(default_par)
 #' @export
 has_peak <- function(x, npeaks = 1, steps = 2) {
     peaks <- get_falls((-x), n_v_shape = npeaks, steps = steps)
