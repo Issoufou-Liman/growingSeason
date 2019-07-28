@@ -15,7 +15,8 @@ Depends:
 Imports:
     raster,
     chillR,
-    plyr
+    plyr,
+    snow
 Suggests:
     testthat,
     knitr,
