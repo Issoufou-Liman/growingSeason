@@ -39,7 +39,7 @@ seasonal_ranges <- function(x, options=c('stats', 'out'), size=1000){
   options <- match.arg(options)
   tmp <- 1:nlayers(x); names(tmp) <- names(x)
   out <- sapply(tmp, function(i){
-    if(canProcessInMemory(x)){
+    if(!canProcessInMemory(x)){
       vals <- sampleRandom(x[[i]], size = size)
     } else {
       vals <- getValues(x[[i]])
@@ -52,17 +52,27 @@ seasonal_ranges <- function(x, options=c('stats', 'out'), size=1000){
     }
   }, simplify = FALSE, USE.NAMES = TRUE)
   if (options == 'stats'){
-    reshape2::melt(out, id.vars = c("ymin", "lower", "middle", "upper", "ymax"))
+    out <- reshape2::melt(out, id.vars = c("ymin", "lower", "middle", "upper", "ymax"))
+    out$year <- substring(out$L1, 2, 5)
   } else if (options == 'out') {
-    reshape2::melt(out)
+    out <- reshape2::melt(out)
   }
+  return(out)
 }
 
-ggplot_seasonal_ranges <- function(x, size=1000, outlier_size = 0.00001){
+ggplot_seasonal_ranges <- function(x, size=1000, lwd=0.001, outlier_size = 0.00001, outlier.colour = 'black', outlier.alpha = 0.01,
+                                   notchwidth = 0.0001, na.rm = TRUE){
   stats <- seasonal_ranges(x, 'stats', size)
   ggplot() +
-    geom_boxplot(data=seasonal_ranges(x, 'stats', size), aes(x=L1, ymin = ymin, lower = lower, middle = middle,
-                                                             upper = upper,  ymax = ymax), stat = "identity")+
-    geom_point(data = seasonal_ranges(x, 'out', size), aes(x=L1, y=value), size = outlier_size)
+    geom_boxplot(data=seasonal_ranges(x, 'stats', size),
+                 aes(x=L1, ymin = ymin, lower = lower, middle = middle, upper = upper,  ymax = ymax,
+                     fill=year, color=year),
+                 stat = "identity",
+                 lwd=lwd, notchwidth = notchwidth, na.rm = na.rm)+
+    geom_point(data = seasonal_ranges(x, 'out', size),
+               aes(x=L1, y=value),
+               size = outlier_size,
+               color=outlier.colour,
+               alpha = outlier.alpha)
 
 }
