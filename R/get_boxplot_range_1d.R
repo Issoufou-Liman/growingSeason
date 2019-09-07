@@ -35,44 +35,129 @@ get_boxplot_range_1d <- function(x, split_IQR =TRUE, na.rm=TRUE , type=5, ...) {
 }
 
 
-seasonal_ranges <- function(x, options=c('stats', 'out'), size=1000){
-  options <- match.arg(options)
-  tmp <- 1:nlayers(x); names(tmp) <- names(x)
-  out <- sapply(tmp, function(i){
-    if(!canProcessInMemory(x)){
-      vals <- sampleRandom(x[[i]], size = size)
-    } else {
-      vals <- getValues(x[[i]])
-    }
-    ranges <- get_boxplot_range_1d(vals)
-    if (options == 'stats'){
-      out <- as.data.frame(as.list(ranges[c(-1, -length(ranges))]))
-    } else if (options == 'out') {
-      out <- vals[(vals <= ranges["ymin"]) & (vals >= ranges["out_min"]) | (vals <= ranges["out_max"]) & (vals >= ranges["ymax"])]
-    }
-  }, simplify = FALSE, USE.NAMES = TRUE)
-  if (options == 'stats'){
-    out <- reshape2::melt(out, id.vars = c("ymin", "lower", "middle", "upper", "ymax"))
-    out$year <- substring(out$L1, 2, 5)
-  } else if (options == 'out') {
-    out <- reshape2::melt(out)
+seasonal_ranges <- function(x, size=1000, sample=FALSE, melt = TRUE){
+  if (!(class(x) %in% c("RasterBrick", "RasterStack", "matrix", "data.frame"))){
+    stop(paste(deparse(substitute(x)), 'must be a rasterStack, rasterBrick, matrix or data.frame'))
   }
-  return(out)
+  if (class(x) %in% c("RasterBrick", "RasterStack")){
+    if((!canProcessInMemory(x)) | sample){
+      vals <- sampleRandom(x, size = size)
+    } else {
+      vals <- getValues(x)
+    }
+  } else if (class(x) %in% c("matrix", "data.frame")){
+    vals <- as.matrix(x)
+  }
+  tmp <- 1:ncol(vals); names(tmp) <- colnames(vals)
+  ranges <- sapply(tmp, function(i){
+    get_boxplot_range_1d(vals[, i])
+  }, simplify = FALSE, USE.NAMES = TRUE)
+
+  stats <- sapply(tmp, function(i){
+    as.data.frame(as.list(ranges[[i]][c(-1, -length(ranges[[i]]))]))
+  }, simplify = FALSE, USE.NAMES = TRUE)
+
+  if(melt){
+    stats <- reshape2::melt(stats, id.vars = c("ymin", "lower", "middle", "upper", "ymax"))
+    stats$year <- substring(stats$L1, 2, 5)
+    stats$L1 <- as.Date(substring(stats$L1, 2), format = "%Y.%m.%d")
+  }
+
+
+  out <- sapply(tmp, function(i){
+    vals <- vals[, i]
+    vals[(vals <= ranges[[i]]["ymin"]) & (vals >= ranges[[i]]["out_min"]) | (vals <= ranges[[i]]["out_max"]) & (vals >= ranges[[i]]["ymax"])]
+  }, simplify = FALSE, USE.NAMES = TRUE)
+  if (melt){
+    out <- reshape2::melt(out)
+    out$year <- substring(out$L1, 2, 5)
+    out$L1 <- as.Date(substring(out$L1, 2), format = "%Y.%m.%d")
+  }
+
+
+  ranges <- list(stats = stats, out = out)
+  class(ranges) <- "seasonal_ranges"
+  return(ranges)
 }
 
-ggplot_seasonal_ranges <- function(x, size=1000, lwd=0.001, outlier_size = 0.00001, outlier.colour = 'black', outlier.alpha = 0.01,
-                                   notchwidth = 0.0001, na.rm = TRUE){
-  stats <- seasonal_ranges(x, 'stats', size)
+
+ggplot_seasonal_ranges <- function(x, ...){
+  UseMethod("ggplot_seasonal_ranges")
+}
+
+ggplot_seasonal_ranges.default <- function(x, ...){
+  x <- seasonal_ranges (x)
   ggplot() +
-    geom_boxplot(data=seasonal_ranges(x, 'stats', size),
-                 aes(x=L1, ymin = ymin, lower = lower, middle = middle, upper = upper,  ymax = ymax,
-                     fill=year, color=year),
-                 stat = "identity",
-                 lwd=lwd, notchwidth = notchwidth, na.rm = na.rm)+
-    geom_point(data = seasonal_ranges(x, 'out', size),
-               aes(x=L1, y=value),
-               size = outlier_size,
-               color=outlier.colour,
-               alpha = outlier.alpha)
-
+    geom_boxplot(data=x$stats,
+                 aes(x=L1, ymin = ymin, lower = lower, middle = middle, upper = upper,  ymax = ymax),
+                 stat = "identity")+
+    geom_point(data=x$out,
+               aes(x=L1, y=value))
 }
+
+ggplot_seasonal_ranges.seasonal_ranges <- function(x, ...){
+  ggplot() +
+    geom_boxplot(data=x$stats,
+                 aes(x=L1, ymin = ymin, lower = lower, middle = middle, upper = upper,  ymax = ymax,
+                     fill=year, color=year), stat = "identity", lwd=0.001, notchwidth = 0.0001, na.rm = TRUE)+
+    geom_point(data=x$out,
+               aes(x=L1, y=value), size = 0.00001, color = 'black', alpha = 0.01)+
+    scale_x_date(date_breaks = "4 months", date_minor_breaks = "1 month", date_labels =  "%b \n%Y", expand = c(0,0),
+                 labels=function(x) sub(" ","d",x,fixed=TRUE))
+}
+
+ggplot_seasonal_ranges.list <- function(x, ...){
+  if (!all(lapply(x, class) %in% c("RasterBrick", "RasterStack", "matrix", "data.frame", "seasonal_ranges"))){
+    stop(paste(deparse(substitute(x)), 'must be a list of RasterBrick, RasterStack, matrix, data.frame or "seasonal_ranges'))
+  }
+  if (length(unique(sapply(x, class)))!=1){ # class mixtures should not make sense
+    stop("list must not contain objects of different class")
+  }
+  if (class(x[[1]]) != "seasonal_ranges"){ # testing the other classes
+    x <- sapply(X=x, FUN = seasonal_ranges, melt = FALSE, ..., simplify = FALSE, USE.NAMES = TRUE)
+    # x <- reshape2::melt(x, id.vars = names(x[[1]]))
+  }
+  data <- reshape2::melt(data=sapply(X=x, '[[', 1, simplify = FALSE, USE.NAMES = TRUE), id.vars = c("ymin", "lower", "middle", "upper", "ymax"))
+  data$year <- substring(data$L2, 2, 5)
+  data$L2 <- as.Date(substring(data$L2, 2), format = "%Y.%m.%d")
+  p <- ggplot() +
+    geom_boxplot(data=data,
+                 aes(x=L2, ymin = ymin, lower = lower, middle = middle, upper = upper,  ymax = ymax,
+                     fill=year, color=year), stat = "identity", lwd=0.001, notchwidth = 0.0001, na.rm = TRUE)+
+    facet_wrap(L1~., nrow = 2)+
+    scale_x_date(date_breaks = "4 months", date_minor_breaks = "1 month", date_labels =  "%b \n%Y", expand = c(0,0),
+                 labels=function(x) sub(" ","d",x,fixed=TRUE))
+
+  data <- reshape2::melt(data=sapply(X=x, '[[', 2, simplify = FALSE, USE.NAMES = TRUE))
+  data$year <- substring(data$L2, 2, 5)
+  data$L2 <- as.Date(substring(data$L2, 2), format = "%Y.%m.%d")
+  p +
+    geom_point(data=data,
+               aes(x=L2, y=value), size = 0.00001, color = 'black', alpha = 0.01)
+}
+test <- seasonal_ranges(ndvi_ts)
+seasonal_ranges(list(NDVI=ndvi_ts,
+                     #mcfeeters_ndwi = mcfeeters_NDMI_ts,
+                     'MDWI (mcfeeters, 1996)' = mcfeeters_NDMI_ts,
+                     NDFI=Boschetti_NDFI_ts,
+                     #gao_ndwi = GAO_NDWI_ts,
+                     'MDWI (Gao, 1996)' = GAO_NDWI_ts), 100)
+
+p=ggplot_seasonal_ranges (test)
+
+test <- list(NDVI=ndvi_ts,
+             #mcfeeters_ndwi = mcfeeters_NDMI_ts,
+             'MDWI (mcfeeters, 1996)' = mcfeeters_NDMI_ts,
+             NDFI=Boschetti_NDFI_ts,
+             #gao_ndwi = GAO_NDWI_ts,
+             'MDWI (Gao, 1996)' = GAO_NDWI_ts)
+p=ggplot_seasonal_ranges (test)+
+  my_theme +
+  scale_color_manual(values = c('gray', 'gray', 'gray'))+
+  guides(color = FALSE)+
+  theme(panel.grid.minor.y = element_line(size = 0.02, linetype = 'solid',color = 'darkgray'),
+        axis.title = element_blank())+
+  scale_x_date(date_breaks = "4 months", date_minor_breaks = "1 month", date_labels =  "%b \n%Y", expand = c(0,0),
+               labels=function(x) sub(" ","d",x,fixed=TRUE))+
+  labs(title='Kisumu County, Kenya',
+       subtitle=paste0('MODIS', ' : ', '2014-01-01', ' ', '/', ' ', '2016-12-26'))
