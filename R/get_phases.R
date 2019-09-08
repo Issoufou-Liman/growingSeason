@@ -3,7 +3,6 @@
 #' get_phases method for getting the phasal data according to the specified type arguments
 #' (peaks or v_points). By default, the phases are derived according to v_points. see ?phases,
 #' the constructor function for the class phases.
-
 #' @param x Either a numeric vector or an object of class phases.
 #' @param ... further arguments passed to the class constructor function phases.
 #' Ignored when `x` is of class `phases`

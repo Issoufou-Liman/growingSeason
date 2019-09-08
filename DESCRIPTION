@@ -16,7 +16,9 @@ Imports:
     raster,
     chillR,
     plyr,
-    snow
+    snow,
+    reshape2,
+    ggplot2
 Suggests:
     testthat,
     knitr,
