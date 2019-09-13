@@ -96,7 +96,7 @@ ggplot_seasonal_ranges.list <- function(x, show_limits=TRUE, ...,
   data$year <- substring(data$L2, 2, 5)
   data$L2 <- as.Date(substring(data$L2, 2), format = "%Y.%m.%d")
   p <- ggplot(data=data) +
-    geom_boxplot(aes_string(x = 'L2', ymin = 'ymin', lower = 'lower', middle = 'middle', upper = 'upper',  ymax = 'ymax', fill = 'year', color = 'year'),
+    geom_boxplot(aes_string(x = 'L2', ymin = 'ymin', lower = 'lower', middle = 'middle', upper = 'upper',  ymax = 'ymax', fill = 'year', color = 'year', group = 'L2'),
                  stat = "identity", position = "dodge2", na.rm = na.rm, show.legend = show.legend, inherit.aes = inherit.aes,
                  lwd=lwd)
   if(show_limits){
