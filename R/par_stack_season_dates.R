@@ -78,7 +78,7 @@ par_stack_season_dates <- function(x, type = "v_points",
     out_tmp <- paste0('out', '_', '1')
     files_tracker[out_tmp] <- filename
     # out_tmp <- writeStart(out, filename = filename )
-    assign(out_tmp, writeStart(out, filename = filename))
+    assign(out_tmp, writeStart(out, filename = filename, ...))
   } else {
     vv <- vector('list', length = bs$n)
   }
@@ -107,7 +107,7 @@ par_stack_season_dates <- function(x, type = "v_points",
           out_tmp <- paste0('out', '_', j)
           files_tracker[out_tmp] <- this_filename
           # out_tmp <- writeStart(out, filename = files_tracker[j] )
-          assign(out_tmp, writeStart(out, filename = files_tracker[j] ))
+          assign(out_tmp, writeStart(out, filename = files_tracker[j], ...))
         }
       }
       for (k in 1:length(files_tracker)) {
