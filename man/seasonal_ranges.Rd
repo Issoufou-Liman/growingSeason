@@ -8,7 +8,7 @@ seasonal_ranges(x, size = 1000, sample = FALSE, melt = TRUE)
 }
 \arguments{
 \item{x}{an object of class dataframe, matrix, or RasterStack. Names of x should
-be dates in the format \code{X\%Y.\%m.\%d}.}
+be dates in the format \verb{X\%Y.\%m.\%d}.}
 
 \item{size}{Integer. Sample size (if sample is TRUE or if the data cannot
 be process in memory).}

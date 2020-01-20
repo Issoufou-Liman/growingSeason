@@ -5,8 +5,14 @@
 \alias{seasons}
 \title{A constructor function for class phase}
 \usage{
-phases(x, type = c("v_points", "peaks"), n_criticals = 1, steps = 2,
-  ts_freq = 23, returned = c("ts_seasonal", "original"))
+phases(
+  x,
+  type = c("v_points", "peaks"),
+  n_criticals = 1,
+  steps = 2,
+  ts_freq = 23,
+  returned = c("ts_seasonal", "original")
+)
 
 seasons(x)
 }

@@ -7,33 +7,77 @@
 \alias{ggplot_seasonal_ranges.list}
 \title{ggplot seasonal ranges}
 \usage{
-ggplot_seasonal_ranges(x, show_limits = TRUE, ...,
-  outlier.colour = "black", outlier.color = "black",
-  outlier.fill = "black", outlier.shape = 19, outlier.size = 1e-05,
-  outlier.stroke = 0.5, outlier.alpha = 0.01, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE, lwd = 0.1)
+ggplot_seasonal_ranges(
+  x,
+  show_limits = TRUE,
+  ...,
+  outlier.colour = "black",
+  outlier.color = "black",
+  outlier.fill = "black",
+  outlier.shape = 19,
+  outlier.size = 1e-05,
+  outlier.stroke = 0.5,
+  outlier.alpha = 0.01,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  lwd = 0.1
+)
 
-\method{ggplot_seasonal_ranges}{default}(x, show_limits = TRUE, ...,
-  outlier.colour = "black", outlier.color = "black",
-  outlier.fill = "black", outlier.shape = 19, outlier.size = 1e-05,
-  outlier.stroke = 0.5, outlier.alpha = 0.01, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE, lwd = 0.1)
+\method{ggplot_seasonal_ranges}{default}(
+  x,
+  show_limits = TRUE,
+  ...,
+  outlier.colour = "black",
+  outlier.color = "black",
+  outlier.fill = "black",
+  outlier.shape = 19,
+  outlier.size = 1e-05,
+  outlier.stroke = 0.5,
+  outlier.alpha = 0.01,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  lwd = 0.1
+)
 
-\method{ggplot_seasonal_ranges}{seasonal_ranges}(x, show_limits = TRUE,
-  ..., outlier.colour = "black", outlier.color = "black",
-  outlier.fill = "black", outlier.shape = 19, outlier.size = 1e-05,
-  outlier.stroke = 0.5, outlier.alpha = 0.01, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE, lwd = 0.1)
+\method{ggplot_seasonal_ranges}{seasonal_ranges}(
+  x,
+  show_limits = TRUE,
+  ...,
+  outlier.colour = "black",
+  outlier.color = "black",
+  outlier.fill = "black",
+  outlier.shape = 19,
+  outlier.size = 1e-05,
+  outlier.stroke = 0.5,
+  outlier.alpha = 0.01,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  lwd = 0.1
+)
 
-\method{ggplot_seasonal_ranges}{list}(x, show_limits = TRUE, ...,
-  outlier.colour = "black", outlier.color = "black",
-  outlier.fill = "black", outlier.shape = 19, outlier.size = 1e-05,
-  outlier.stroke = 0.5, outlier.alpha = 0.01, na.rm = FALSE,
-  show.legend = NA, inherit.aes = TRUE, lwd = 0.1)
+\method{ggplot_seasonal_ranges}{list}(
+  x,
+  show_limits = TRUE,
+  ...,
+  outlier.colour = "black",
+  outlier.color = "black",
+  outlier.fill = "black",
+  outlier.shape = 19,
+  outlier.size = 1e-05,
+  outlier.stroke = 0.5,
+  outlier.alpha = 0.01,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  lwd = 0.1
+)
 }
 \arguments{
 \item{x}{an object of class dataframe, matrix, or RasterStack. Names of x should
-be dates in the format \code{X\%Y.\%m.\%d}.}
+be dates in the format \verb{X\%Y.\%m.\%d}.}
 
 \item{show_limits}{Logical.Should the differents ranges be delineated with lines?}
 
@@ -135,7 +179,7 @@ display.}
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{lwd}{Numeric. line width}
 }

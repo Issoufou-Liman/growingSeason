@@ -103,7 +103,7 @@ ggplot_seasonal_ranges.list <- function(x, show_limits=TRUE, ...,
     p <- p +
       stat_summary(fun.y='identity', geom="smooth", aes_string(x='L2', y='out_max', group=1), colour="red", size=0.2)+
       stat_summary(fun.y='identity', geom="smooth", aes_string(x='L2', y='ymax', group=1), colour="black", size=0.3)+
-      stat_summary(fun.y='identity', geom="smooth", aes_string(x='L2', y='middle', group=1), colour ="lightgreen", size=0.5)+
+      stat_summary(fun.y='identity', geom="smooth", aes_string(x='L2', y='middle', group=1), colour ="forestgreen", size=0.5)+
       stat_summary(fun.y='identity', geom="smooth", aes_string(x='L2', y='ymin', group=1), colour="black", size=0.3)+
       stat_summary(fun.y='identity', geom="smooth", aes_string(x='L2', y='out_min', group=1), colour="red", size=0.2)
   }

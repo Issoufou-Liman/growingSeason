@@ -4,9 +4,17 @@
 \alias{par_stack_season_dates}
 \title{Estimate and stack the beginning and end of growing seasons using parallel processing.}
 \usage{
-par_stack_season_dates(x, type = "v_points", n_criticals = 1,
-  steps = 2, ts_freq = 23, returned = c("ts_seasonal", "original"),
-  valid_range = NULL, filename = "", ...)
+par_stack_season_dates(
+  x,
+  type = "v_points",
+  n_criticals = 1,
+  steps = 2,
+  ts_freq = 23,
+  returned = c("ts_seasonal", "original"),
+  valid_range = NULL,
+  filename = "",
+  ...
+)
 }
 \arguments{
 \item{x}{A Raster \code{\link[raster]{brick}} or \code{\link[raster]{stack}}}
@@ -34,8 +42,8 @@ one should set these values to be between.}
 \item{...}{Additional arguments: 
   		
 \code{datatype}{Character. Output data type (e.g. 'INT2S' or 'FLT4S'). 
-See \code{\link{dataType}}. If no datatype is specified, 'FLT4S' is used,
-unless this default value was changed with \code{\link{rasterOptions}}}
+See \code{\link[raster]{dataType}}. If no datatype is specified, 'FLT4S' is used,
+unless this default value was changed with \code{\link[raster]{rasterOptions}}}
 	
 \code{overwrite}: Logical. If TRUE, "filename" will be overwritten if it exists
 	
